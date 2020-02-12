@@ -6,11 +6,6 @@ export default function virtualize(MyComponent) {
   class Virtualize extends PureComponent {
     timer = null;
 
-    constructor(props) {
-      super(props);
-      this.state.index = props.index || 0;
-    }
-
     /**
      *
      *           index          indexStop
@@ -20,38 +15,27 @@ export default function virtualize(MyComponent) {
      * ------------|-------------------------->
      *  -2    -1   0    1    2    3    4    5
      */
-    state = {};
+    state = {
+      index: this.props.index || 0,
+      // eslint-disable-next-line react/no-unused-state
+      lastIndex: 0,
+    };
 
-    componentWillMount() {
+    componentDidMount() {
       this.setWindow(this.state.index);
     }
 
-    componentWillReceiveProps(nextProps) {
-      const { index } = nextProps;
-
-      if (typeof index === 'number' && index !== this.props.index) {
-        const indexDiff = index - this.props.index;
-        this.setIndex(index, this.state.indexContainer + indexDiff, indexDiff);
-      }
-    }
-
-    componentWillUnmount() {
-      clearInterval(this.timer);
-    }
-
-    setIndex(index, indexContainer, indexDiff) {
+    // eslint-disable-next-line react/sort-comp
+    static calculateIndex(index, indexContainer, indexDiff, props, state) {
       const nextState = {
         index,
         indexContainer,
-        indexStart: this.state.indexStart,
-        indexStop: this.state.indexStop,
+        indexStart: state.indexStart,
+        indexStop: state.indexStop,
       };
 
       // We are going forward, let's render one more slide ahead.
-      if (
-        indexDiff > 0 &&
-        (!this.props.slideCount || nextState.indexStop < this.props.slideCount - 1)
-      ) {
+      if (indexDiff > 0 && (!props.slideCount || nextState.indexStop < props.slideCount - 1)) {
         nextState.indexStop += 1;
       }
 
@@ -68,7 +52,35 @@ export default function virtualize(MyComponent) {
         nextState.indexStart -= beforeAhead;
       }
 
-      this.setState(nextState);
+      return nextState;
+    }
+
+    static getDerivedStateFromProps(props, state) {
+      if (typeof props.index === 'number' && props.index !== state.lastIndex) {
+        const indexDiff = props.index - state.lastIndex;
+        return {
+          ...Virtualize.calculateIndex(
+            props.index,
+            state.indexContainer + indexDiff,
+            indexDiff,
+            props,
+            state,
+          ),
+          lastIndex: props.index,
+        };
+      }
+
+      return null;
+    }
+
+    componentWillUnmount() {
+      clearInterval(this.timer);
+    }
+
+    setIndex(index, indexContainer, indexDiff) {
+      this.setState(state =>
+        Virtualize.calculateIndex(index, indexContainer, indexDiff, this.props, state),
+      );
     }
 
     setWindow(index = this.state.index) {
