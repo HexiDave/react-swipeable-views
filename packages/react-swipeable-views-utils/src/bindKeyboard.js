@@ -29,22 +29,21 @@ export default function bindKeyboard(MyComponent) {
       slideCount: PropTypes.number,
     };
 
-    state = {};
+    state = {
+      index: this.props.index || 0,
+      // eslint-disable-next-line react/no-unused-state
+      lastIndex: null,
+    };
 
-    componentWillMount() {
-      this.setState({
-        index: this.props.index || 0,
-      });
-    }
-
-    componentWillReceiveProps(nextProps) {
-      const { index } = nextProps;
-
-      if (typeof index === 'number' && index !== this.props.index) {
-        this.setState({
-          index,
-        });
+    static getDerivedStateFromProps(props, state) {
+      if (typeof props.index === 'number' && props.index !== state.lastIndex) {
+        return {
+          index: props.index,
+          lastIndex: props.index,
+        };
       }
+
+      return null;
     }
 
     handleKeyDown = event => {
