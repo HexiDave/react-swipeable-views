@@ -25,6 +25,7 @@ describe('virtualize', () => {
         indexContainer: 3,
         indexStart: -3,
         indexStop: 1,
+        lastIndex: 0,
       });
     });
   });
@@ -40,6 +41,7 @@ describe('virtualize', () => {
         indexContainer: 1,
         indexStart: -1,
         indexStop: 2,
+        lastIndex: 0,
       });
     });
   });
@@ -53,6 +55,7 @@ describe('virtualize', () => {
         indexContainer: 3,
         indexStart: -3,
         indexStop: 2,
+        lastIndex: 0,
       });
     });
 
@@ -66,6 +69,7 @@ describe('virtualize', () => {
         indexContainer: 4,
         indexStart: -3,
         indexStop: 3,
+        lastIndex: 0,
       });
 
       wrapper.instance().setWindow();
@@ -75,6 +79,7 @@ describe('virtualize', () => {
         indexContainer: 3,
         indexStart: -2,
         indexStop: 3,
+        lastIndex: 0,
       });
     });
 
@@ -88,6 +93,7 @@ describe('virtualize', () => {
         indexContainer: 2,
         indexStart: -3,
         indexStop: 2,
+        lastIndex: 0,
       });
 
       wrapper.instance().setWindow();
@@ -97,6 +103,7 @@ describe('virtualize', () => {
         indexContainer: 3,
         indexStart: -4,
         indexStop: 1,
+        lastIndex: 0,
       });
     });
 
@@ -110,6 +117,7 @@ describe('virtualize', () => {
         indexContainer: 2,
         indexStart: -3,
         indexStop: 2,
+        lastIndex: 0,
       });
 
       wrapper.find(Empty).simulate('transitionEnd');
@@ -120,6 +128,7 @@ describe('virtualize', () => {
           indexContainer: 3,
           indexStart: -4,
           indexStop: 1,
+          lastIndex: 0,
         });
         done();
       }, 0);
@@ -137,6 +146,7 @@ describe('virtualize', () => {
         indexContainer: 0,
         indexStart: 0,
         indexStop: 2,
+        lastIndex: 0,
       });
     });
 
@@ -152,6 +162,7 @@ describe('virtualize', () => {
         indexContainer: 1,
         indexStart: 0,
         indexStop: 3,
+        lastIndex: 0,
       });
 
       wrapper.instance().setWindow();
@@ -161,6 +172,7 @@ describe('virtualize', () => {
         indexContainer: 1,
         indexStart: 0,
         indexStop: 3,
+        lastIndex: 0,
       });
     });
 
@@ -179,6 +191,7 @@ describe('virtualize', () => {
         indexContainer: 4,
         indexStart: 5,
         indexStop: 9,
+        lastIndex: 9,
       });
 
       wrapper.instance().setWindow();
@@ -188,6 +201,7 @@ describe('virtualize', () => {
         indexContainer: 3,
         indexStart: 6,
         indexStop: 9,
+        lastIndex: 9,
       });
     });
 
@@ -201,6 +215,7 @@ describe('virtualize', () => {
         indexContainer: 0,
         indexStart: 0,
         indexStop: 2,
+        lastIndex: 0,
       });
     });
   });
@@ -214,6 +229,7 @@ describe('virtualize', () => {
         indexContainer: 3,
         indexStart: -2,
         indexStop: 3,
+        lastIndex: 1,
       });
 
       wrapper.setProps({
@@ -225,6 +241,7 @@ describe('virtualize', () => {
         indexContainer: 5,
         indexStart: -2,
         indexStop: 4,
+        lastIndex: 3,
       });
 
       wrapper.instance().setWindow();
@@ -234,6 +251,7 @@ describe('virtualize', () => {
         indexContainer: 3,
         indexStart: 0,
         indexStop: 5,
+        lastIndex: 3,
       });
     });
 
@@ -249,6 +267,7 @@ describe('virtualize', () => {
         indexContainer: 0,
         indexStart: 0,
         indexStop: 11,
+        lastIndex: 0,
       });
     });
 
@@ -264,6 +283,7 @@ describe('virtualize', () => {
         indexContainer: 12,
         indexStart: -3,
         indexStop: 9,
+        lastIndex: 9,
       });
     });
   });

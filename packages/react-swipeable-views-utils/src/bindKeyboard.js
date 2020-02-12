@@ -32,7 +32,7 @@ export default function bindKeyboard(MyComponent) {
     state = {
       index: this.props.index || 0,
       // eslint-disable-next-line react/no-unused-state
-      lastIndex: null,
+      lastIndex: this.props.index || 0,
     };
 
     static getDerivedStateFromProps(props, state) {

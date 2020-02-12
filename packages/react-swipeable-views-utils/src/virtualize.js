@@ -18,7 +18,7 @@ export default function virtualize(MyComponent) {
     state = {
       index: this.props.index || 0,
       // eslint-disable-next-line react/no-unused-state
-      lastIndex: 0,
+      lastIndex: this.props.index || 0,
     };
 
     componentDidMount() {
