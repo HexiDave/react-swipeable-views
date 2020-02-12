@@ -245,10 +245,6 @@ class SwipeableViews extends React.Component {
       heightLatest: 0,
       // Let the render method that we are going to display the same slide than previously.
       displaySameSlide: true,
-      // eslint-disable-next-line react/no-unused-state
-      lastProps: props,
-      // eslint-disable-next-line react/no-unused-state
-      nextIndex: null,
     };
     this.setIndexCurrent(props.index);
   }
@@ -305,28 +301,21 @@ class SwipeableViews extends React.Component {
     }
   }
 
-  static getDerivedStateFromProps(props, state) {
-    if (typeof props.index === 'number' && props.index !== state.lastProps.index) {
+  componentDidUpdate(prevProps) {
+    const { index } = this.props;
+
+    if (typeof index === 'number' && index !== prevProps.index) {
       if (process.env.NODE_ENV !== 'production') {
-        checkIndexBounds(props);
+        checkIndexBounds(this.props);
       }
-      return {
-        // If true, we are going to change the children. We shoudn't animate it.
-        displaySameSlide: getDisplaySameSlide(state.lastProps, props),
-        indexLatest: props.index,
-        lastProps: props,
-        nextIndex: props.index,
-      };
-    }
 
-    return null;
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.nextIndex === null && this.state.nextIndex !== null) {
-      this.setIndexCurrent(this.state.nextIndex);
+      this.setIndexCurrent(index);
       // eslint-disable-next-line react/no-did-update-set-state
-      this.setState({ nextIndex: null });
+      this.setState({
+        // If true, we are going to change the children. We shouldn't animate it.
+        displaySameSlide: getDisplaySameSlide(prevProps, this.props),
+        indexLatest: index,
+      });
     }
   }
 
