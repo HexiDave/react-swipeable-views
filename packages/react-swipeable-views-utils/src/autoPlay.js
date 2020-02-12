@@ -8,26 +8,25 @@ export default function autoPlay(MyComponent) {
   class AutoPlay extends React.Component {
     timer = null;
 
-    constructor(props) {
-      super(props);
-
-      this.state.index = props.index || 0;
-    }
-
-    state = {};
+    state = {
+      index: this.props.index || 0,
+      // eslint-disable-next-line react/no-unused-state
+      lastIndex: null,
+    };
 
     componentDidMount() {
       this.startInterval();
     }
 
-    componentWillReceiveProps(nextProps) {
-      const { index } = nextProps;
-
-      if (typeof index === 'number' && index !== this.props.index) {
-        this.setState({
-          index,
-        });
+    static getDerivedStateFromProps(props, state) {
+      if (typeof props.index === 'number' && props.index !== state.lastIndex) {
+        return {
+          index: props.index,
+          lastIndex: props.index,
+        };
       }
+
+      return null;
     }
 
     componentDidUpdate(prevProps) {
